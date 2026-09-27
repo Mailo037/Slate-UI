@@ -1,0 +1,11 @@
+import type { ButtonHTMLAttributes, InputHTMLAttributes, HTMLAttributes, SVGProps, ReactNode, RefObject, ForwardRefExoticComponent, RefAttributes } from 'react';
+export type IconName = 'play'|'pause'|'stop'|'mic'|'grid'|'layers'|'palette'|'pointer'|'panel'|'copy'|'settings'|'book'|'download'|'check'|'close'|'minus'|'square'|'chevron'|'code'|'search';
+export const Icon: ForwardRefExoticComponent<SVGProps<SVGSVGElement> & {name:IconName} & RefAttributes<SVGSVGElement>>;
+export function useSlateUI(ref?: RefObject<HTMLElement | null>): void;
+export const Button: ForwardRefExoticComponent<ButtonHTMLAttributes<HTMLButtonElement> & {variant?: 'primary'|'ghost'|'icon'|'danger';size?: 'small'|'large';tooltip?: string} & RefAttributes<HTMLButtonElement>>;
+export const Input: ForwardRefExoticComponent<InputHTMLAttributes<HTMLInputElement> & RefAttributes<HTMLInputElement>>;
+export function Field(props: {label: ReactNode;hint?: ReactNode;children: ReactNode;className?: string}): ReactNode;
+export const Panel: ForwardRefExoticComponent<HTMLAttributes<HTMLElement> & RefAttributes<HTMLElement>>;
+export const HoverList: ForwardRefExoticComponent<HTMLAttributes<HTMLDivElement> & RefAttributes<HTMLDivElement>>;
+export const MenuRow: ForwardRefExoticComponent<ButtonHTMLAttributes<HTMLButtonElement> & RefAttributes<HTMLButtonElement>>;
+export function Status(props: HTMLAttributes<HTMLSpanElement> & {tone?: 'success'|'warning'|'error'}): ReactNode;

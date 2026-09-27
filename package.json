@@ -1,0 +1,41 @@
+{
+  "name": "@local/slate-ui",
+  "version": "0.1.0",
+  "description": "Shared dark UI kit extracted from Riplet, Player and CWBridge",
+  "main": "slate.js",
+  "exports": {
+    ".": "./slate.js",
+    "./styles.css": "./slate.css",
+    "./react": {
+      "types": "./react.d.ts",
+      "import": "./react.mjs"
+    }
+  },
+  "files": [
+    "slate.js",
+    "slate.css",
+    "react.mjs",
+    "react.d.ts",
+    "fonts",
+    "README.md",
+    "DESIGN.md",
+    "AGENTS.md",
+    "NOTICE.md",
+    "icons",
+    "LICENSE-Material-Symbols.txt"
+  ],
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "check": "node check.cjs",
+    "serve": "node serve.cjs",
+    "pack:kit": "node pack.cjs"
+  },
+  "private": true
+}

@@ -1,0 +1,128 @@
+{
+  "source": "https://github.com/google/material-design-icons",
+  "revision": "bd8cb85bd4bad964fe6918f79665bb40c3a8efef",
+  "family": "Material Symbols Rounded",
+  "license": "Apache-2.0",
+  "aliases": {
+    "play": {
+      "file": "play_arrow_fill1_24px.svg",
+      "path": "symbols/web/play_arrow/materialsymbolsrounded/play_arrow_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "pause": {
+      "file": "pause_fill1_24px.svg",
+      "path": "symbols/web/pause/materialsymbolsrounded/pause_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "stop": {
+      "file": "stop_fill1_24px.svg",
+      "path": "symbols/web/stop/materialsymbolsrounded/stop_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "mic": {
+      "file": "mic_fill1_24px.svg",
+      "path": "symbols/web/mic/materialsymbolsrounded/mic_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "grid": {
+      "file": "grid_view_fill1_24px.svg",
+      "path": "symbols/web/grid_view/materialsymbolsrounded/grid_view_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "layers": {
+      "file": "layers_fill1_24px.svg",
+      "path": "symbols/web/layers/materialsymbolsrounded/layers_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "palette": {
+      "file": "palette_fill1_24px.svg",
+      "path": "symbols/web/palette/materialsymbolsrounded/palette_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "pointer": {
+      "file": "touch_app_fill1_24px.svg",
+      "path": "symbols/web/touch_app/materialsymbolsrounded/touch_app_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "panel": {
+      "file": "side_navigation_fill1_24px.svg",
+      "path": "symbols/web/side_navigation/materialsymbolsrounded/side_navigation_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "copy": {
+      "file": "content_copy_fill1_24px.svg",
+      "path": "symbols/web/content_copy/materialsymbolsrounded/content_copy_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "settings": {
+      "file": "settings_fill1_24px.svg",
+      "path": "symbols/web/settings/materialsymbolsrounded/settings_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "book": {
+      "file": "menu_book_fill1_24px.svg",
+      "path": "symbols/web/menu_book/materialsymbolsrounded/menu_book_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "download": {
+      "file": "download_fill1_24px.svg",
+      "path": "symbols/web/download/materialsymbolsrounded/download_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "check": {
+      "file": "check_fill1_24px.svg",
+      "path": "symbols/web/check/materialsymbolsrounded/check_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "close": {
+      "file": "close_24px.svg",
+      "path": "symbols/web/close/materialsymbolsrounded/close_24px.svg",
+      "fill": 0,
+      "viewBox": "0 -960 960 960"
+    },
+    "minus": {
+      "file": "remove_24px.svg",
+      "path": "symbols/web/remove/materialsymbolsrounded/remove_24px.svg",
+      "fill": 0,
+      "viewBox": "0 -960 960 960"
+    },
+    "square": {
+      "file": "crop_square_24px.svg",
+      "path": "symbols/web/crop_square/materialsymbolsrounded/crop_square_24px.svg",
+      "fill": 0,
+      "viewBox": "0 -960 960 960"
+    },
+    "chevron": {
+      "file": "expand_more_24px.svg",
+      "path": "symbols/web/expand_more/materialsymbolsrounded/expand_more_24px.svg",
+      "fill": 0,
+      "viewBox": "0 -960 960 960"
+    },
+    "code": {
+      "file": "code_fill1_24px.svg",
+      "path": "symbols/web/code/materialsymbolsrounded/code_fill1_24px.svg",
+      "fill": 1,
+      "viewBox": "0 -960 960 960"
+    },
+    "search": {
+      "file": "search_24px.svg",
+      "path": "symbols/web/search/materialsymbolsrounded/search_24px.svg",
+      "fill": 0,
+      "viewBox": "0 -960 960 960"
+    }
+  }
+}
