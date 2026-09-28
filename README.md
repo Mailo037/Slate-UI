@@ -10,6 +10,9 @@ Checkboxes use CWBridge's animated check: a 150ms fill transition and a 350ms ro
 
 Switches retain native checkbox state and keyboard behavior. Their off thumb is smaller; pointer dragging follows the thumb and commits at the midpoint on release. A completed drag emits one input/change pair only when the value changes; pointer cancellation restores the original state. Reduced motion removes the stretch and animated travel. Initialise SlateUI to enable dragging; plain CSS switches still support click and keyboard toggling.
 
+The switch thumb and draggable tab indicator stretch in the direction of travel according to recent pointer velocity, with capped deformation and a short return to their resting shape. Slow movement stays close to the normal geometry; reduced motion keeps both shapes steady.
+The switch track color follows the thumb continuously during a drag and eases to its final blue or gray state on release; regular click and keyboard changes use the same color transition.
+
 Icons use Google's [Material Symbols Rounded](https://github.com/google/material-design-icons), bundled as original static SVGs for offline use. Navigation and primary actions use the filled variant; window controls and directional geometry use the unfilled variant where it keeps meaning clearer. The exact source revision, fill variants and name mapping are in `icons/SOURCE.json`, with Apache 2.0 attribution in `LICENSE-Material-Symbols.txt`. The kit does not load an icon font or make runtime network requests. No Phosphor, Lucide or Radix geometry remains.
 
 Dialog and menu triggers animate their surfaces in over 220ms and out over 150ms. Menus become inert during exit; dialogs retain the browser focus trap until exit completes, then restore trigger focus. Escape and `method="dialog"` submissions use the same exit. Call `SlateUI.closeDialog(dialog, returnValue)` for programmatic animated closing; direct native `dialog.close()` closes immediately. Native `showModal()` is observed for entrance. Reduced motion skips travel.
@@ -126,7 +129,7 @@ Reuse slate.css, slate.js and the provided templates.
 Preserve the shared tokens and interaction contract.
 ```
 
-No remote repository has been created. The kit is usable locally and through the downloadable `Slate-UI.zip` archive. Use `npm run pack:kit` after changes to refresh that archive.
+The source is published at [Mailo037/Slate-UI](https://github.com/Mailo037/Slate-UI). Browse the [interactive gallery](https://mailo037.github.io/Slate-UI/) or download `Slate-UI.zip` from the gallery. Run `npm run pack:kit` after changes to refresh the archive before publishing.
 
 ## File map
 

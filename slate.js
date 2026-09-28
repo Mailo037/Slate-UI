@@ -145,18 +145,19 @@
     disposers.push(()=>{checkObserver.disconnect();checkControls.forEach((wrapper,input)=>{if(input.parentElement===wrapper)wrapper.before(input);wrapper.remove();});checkControls.clear();});
 
     let switchDrag=null;const switchTimers=new Map(),switchClicks=new WeakMap();
-    function settleSwitch(button){
+    function settleSwitch(button,velocity=0){
       view.clearTimeout(switchTimers.get(button));button.classList.add('sl-switch-moving');
-      switchTimers.set(button,view.setTimeout(()=>{button.classList.remove('sl-switch-moving');switchTimers.delete(button);},120));
+      button.style.setProperty('--sl-switch-stretch',String(1+Math.min(.38,velocity?Math.abs(velocity)*.22:.16)));
+      switchTimers.set(button,view.setTimeout(()=>{button.classList.remove('sl-switch-moving');button.style.removeProperty('--sl-switch-stretch');switchTimers.delete(button);},150));
     }
     function finishSwitch(event,cancel=false){
       const drag=switchDrag;if(!drag||event.pointerId!==drag.id)return;switchDrag=null;
       const button=drag.button;button.classList.remove('sl-switch-dragging');button.style.removeProperty('--sl-switch-x');button.style.removeProperty('--sl-switch-scale');button.style.removeProperty('--sl-switch-stretch');
       if(button.hasPointerCapture(drag.id))button.releasePointerCapture(drag.id);
-      if(drag.moved){switchClicks.set(button,Date.now()+300);if(!cancel&&!button.disabled&&button.isConnected){const checked=drag.position>=.5;if(button.checked!==checked){button.checked=checked;button.dispatchEvent(new view.Event('input',{bubbles:true}));button.dispatchEvent(new view.Event('change',{bubbles:true}));}else settleSwitch(button);}}
+      if(drag.moved){switchClicks.set(button,Date.now()+300);if(!cancel&&!button.disabled&&button.isConnected){const checked=drag.position>=.5;if(button.checked!==checked){button.checked=checked;button.dispatchEvent(new view.Event('input',{bubbles:true}));button.dispatchEvent(new view.Event('change',{bubbles:true}));}settleSwitch(button,event.timeStamp-drag.lastTime<90?drag.velocity:0);}void button.offsetWidth;button.style.removeProperty('background-color');}
     }
-    on(root,'pointerdown',event=>{const button=closest(event.target,'.sl-switch');if(!button||button.disabled||event.button!==0||!event.isPrimary)return;switchDrag={button,id:event.pointerId,start:event.clientX,position:button.checked?1:0,initial:button.checked?1:0,moved:false};button.setPointerCapture(event.pointerId);});
-    on(root,'pointermove',event=>{const drag=switchDrag;if(!drag||event.pointerId!==drag.id)return;if(drag.button.disabled){finishSwitch(event,true);return;}const delta=event.clientX-drag.start;if(!drag.moved&&Math.abs(delta)<4)return;drag.moved=true;drag.position=Math.max(0,Math.min(1,drag.initial+delta/14));drag.button.classList.add('sl-switch-dragging');drag.button.style.setProperty('--sl-switch-x',`${drag.position*14}px`);drag.button.style.setProperty('--sl-switch-scale',String(.72+drag.position*.28));drag.button.style.setProperty('--sl-switch-stretch',view.matchMedia('(prefers-reduced-motion: reduce)').matches?'1':'1.18');});
+    on(root,'pointerdown',event=>{const button=closest(event.target,'.sl-switch');if(!button||button.disabled||event.button!==0||!event.isPrimary)return;switchDrag={button,id:event.pointerId,start:event.clientX,position:button.checked?1:0,initial:button.checked?1:0,moved:false,lastX:event.clientX,lastTime:event.timeStamp,velocity:0};button.setPointerCapture(event.pointerId);});
+    on(root,'pointermove',event=>{const drag=switchDrag;if(!drag||event.pointerId!==drag.id)return;if(drag.button.disabled){finishSwitch(event,true);return;}const delta=event.clientX-drag.start;if(!drag.moved&&Math.abs(delta)<4)return;drag.moved=true;const elapsed=event.timeStamp-drag.lastTime;if(elapsed>0)drag.velocity=Math.max(-2,Math.min(2,(event.clientX-drag.lastX)/elapsed));drag.lastX=event.clientX;drag.lastTime=event.timeStamp;drag.position=Math.max(0,Math.min(1,drag.initial+delta/14));drag.button.classList.add('sl-switch-dragging');drag.button.style.setProperty('--sl-switch-x',`${drag.position*14}px`);drag.button.style.setProperty('--sl-switch-scale',String(.72+drag.position*.28));drag.button.style.setProperty('--sl-switch-stretch',view.matchMedia('(prefers-reduced-motion: reduce)').matches?'1':String(1+Math.min(.38,Math.abs(drag.velocity)*.22)));drag.button.style.backgroundColor=`color-mix(in srgb, var(--sl-line-strong) ${Math.round((1-drag.position)*100)}%, var(--sl-accent))`;});
     on(root,'pointerup',event=>finishSwitch(event));on(root,'pointercancel',event=>finishSwitch(event,true));on(root,'lostpointercapture',event=>finishSwitch(event,true));
     on(root,'click',event=>{const button=closest(event.target,'.sl-switch');if(button&&switchClicks.get(button)>Date.now()){event.preventDefault();event.stopImmediatePropagation();switchClicks.delete(button);}},true);
     on(root,'change',event=>{if(event.target.matches?.('.sl-switch'))settleSwitch(event.target);});
@@ -167,16 +168,17 @@
       const drag=tabDrag;if(!drag||event.pointerId!==drag.id)return;tabDrag=null;
       drag.list.classList.remove('sl-tabs-dragging');
       if(drag.capture.hasPointerCapture(drag.id))drag.capture.releasePointerCapture(drag.id);
-      if(drag.moved){tabClicks.set(drag.list,Date.now()+300);if(!cancel&&drag.target?.isConnected&&!drag.target.disabled){activateTab(drag.target);drag.target.focus({preventScroll:true});}else positionTabIndicator(drag.list);}
+      if(drag.moved){tabClicks.set(drag.list,Date.now()+300);if(!cancel&&drag.target?.isConnected&&!drag.target.disabled){activateTab(drag.target,true);drag.target.focus({preventScroll:true});}else positionTabIndicator(drag.list);view.requestAnimationFrame(()=>{if(drag.indicator.isConnected){drag.indicator.style.removeProperty('--sl-tab-scale-x');drag.indicator.style.removeProperty('--sl-tab-scale-y');}});}
     }
     on(root,'pointerdown',event=>{
       const tab=closest(event.target,'[data-sl-tabs] [role=tab], [data-sl-tabs] .sl-tab[aria-pressed]');if(!tab||tab.disabled||event.button!==0||!event.isPrimary)return;
       const list=tab.closest('[data-sl-tabs]');positionTabIndicator(list);const indicator=list.querySelector(':scope > .sl-tab-indicator'),bounds=indicator.getBoundingClientRect(),rect=list.getBoundingClientRect();
-      tabDrag={list,indicator,capture:tab,id:event.pointerId,x:event.clientX,y:event.clientY,left:bounds.left-rect.left-list.clientLeft,top:bounds.top-rect.top-list.clientTop,width:bounds.width,height:bounds.height,moved:false,target:tab};tab.setPointerCapture(event.pointerId);
+      tabDrag={list,indicator,capture:tab,id:event.pointerId,x:event.clientX,y:event.clientY,left:bounds.left-rect.left-list.clientLeft,top:bounds.top-rect.top-list.clientTop,width:bounds.width,height:bounds.height,moved:false,target:tab,lastAxis:list.getAttribute('aria-orientation')==='vertical'?event.clientY:event.clientX,lastTime:event.timeStamp,velocity:0};tab.setPointerCapture(event.pointerId);
     });
     on(root,'pointermove',event=>{
       const drag=tabDrag;if(!drag||drag.id!==event.pointerId)return;const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.moved&&Math.hypot(dx,dy)<4)return;
-      drag.moved=true;drag.list.classList.add('sl-tabs-dragging');const vertical=drag.list.getAttribute('aria-orientation')==='vertical';
+      drag.moved=true;drag.list.classList.add('sl-tabs-dragging');const vertical=drag.list.getAttribute('aria-orientation')==='vertical';const axis=vertical?event.clientY:event.clientX,elapsed=event.timeStamp-drag.lastTime;if(elapsed>0)drag.velocity=Math.max(-2,Math.min(2,(axis-drag.lastAxis)/elapsed));drag.lastAxis=axis;drag.lastTime=event.timeStamp;
+      const stretch=view.matchMedia('(prefers-reduced-motion: reduce)').matches?0:Math.min(.28,Math.abs(drag.velocity)*.16);drag.indicator.style.setProperty('--sl-tab-scale-x',String(vertical?1-stretch*.55:1+stretch));drag.indicator.style.setProperty('--sl-tab-scale-y',String(vertical?1+stretch:1-stretch*.55));
       const x=vertical?drag.left:Math.max(4,Math.min(drag.list.clientWidth-drag.width-4,drag.left+dx));const y=vertical?Math.max(4,Math.min(drag.list.clientHeight-drag.height-4,drag.top+dy)):drag.top;
       drag.indicator.style.transform=`translate(${x}px,${y}px)`;
       const rect=drag.list.getBoundingClientRect(),centerX=rect.left+x+drag.width/2,centerY=rect.top+y+drag.height/2;
@@ -508,13 +510,13 @@
     indicator.style.transform=`translate(${a.left-b.left-list.clientLeft+list.scrollLeft}px,${a.top-b.top-list.clientTop+list.scrollTop}px)`; indicator.style.width=`${a.width}px`;indicator.style.height=`${a.height}px`;
   }
   const tabMotions=new WeakMap();
-  function activateTab(tab) {
+  function activateTab(tab,fromDrag=false) {
     const list = tab.closest('[data-sl-tabs]'); if (!list || tab.disabled) return;
     const doc = tab.ownerDocument;
     list.querySelectorAll('[role="tab"], .sl-tab[aria-pressed]').forEach(item=>{const selected=item===tab;item.setAttribute(item.hasAttribute('aria-pressed')?'aria-pressed':'aria-selected',String(selected));item.tabIndex=selected?0:-1;const panel=doc.getElementById(item.getAttribute('aria-controls'));if(panel)panel.hidden=!selected;});
     positionTabIndicator(list);
     const indicator=list.querySelector(':scope > .sl-tab-indicator');tabMotions.get(indicator)?.cancel();
-    if(indicator&&!doc.defaultView.matchMedia('(prefers-reduced-motion: reduce)').matches)tabMotions.set(indicator,indicator.animate([{scale:'1 1'},{scale:'1.06 .94',offset:.35},{scale:'1 1'}],{duration:220,easing:'cubic-bezier(.22,1,.36,1)'}));
+    if(indicator&&!fromDrag&&!doc.defaultView.matchMedia('(prefers-reduced-motion: reduce)').matches)tabMotions.set(indicator,indicator.animate([{scale:'1 1'},{scale:'1.06 .94',offset:.35},{scale:'1 1'}],{duration:220,easing:'cubic-bezier(.22,1,.36,1)'}));
     list.dispatchEvent(new doc.defaultView.CustomEvent('slate:tab',{bubbles:true,detail:{value:tab.dataset.slValue || tab.id}}));
   }
   const api = { init, reveal, popInText, setIcon, closeDialog, toast, dismissToasts, buttonFeedback, copyToClipboard, version: '0.1.0' };
