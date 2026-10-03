@@ -1,0 +1,22 @@
+{
+  "shape": "package",
+  "pkg": "@local/slate-ui",
+  "globalName": "SlateUIReact",
+  "buildCmd": "node .design-sync/stage-package.mjs",
+  "entry": ".ds-sync/slate-ui/react.mjs",
+  "cssEntry": "slate.css",
+  "guidelinesGlob": [
+    "DESIGN.md",
+    "README.md"
+  ],
+  "readmeHeader": ".design-sync/conventions.md",
+  "dtsPropsFor": {
+    "Button": "  /** Visual style. Omit for the default neutral (secondary) button. Classes: sl-btn + variant. */\n  variant?: \"primary\" | \"ghost\" | \"icon\" | \"danger\";\n  /** small = 28px, large = 36px; default 32px. */\n  size?: \"small\" | \"large\";\n  /** Sticky tooltip text (rendered as data-sl-tooltip). Never the only accessible name: icon buttons also need aria-label. */\n  tooltip?: string;\n  /** Defaults to \"button\". */\n  type?: \"button\" | \"submit\" | \"reset\";\n  disabled?: boolean;\n  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;\n  /** Required for variant=\"icon\" (icon-only) buttons. */\n  \"aria-label\"?: string;\n  \"aria-pressed\"?: boolean;\n  \"aria-expanded\"?: boolean;\n  \"aria-controls\"?: string;\n  \"aria-haspopup\"?: boolean | \"menu\" | \"listbox\" | \"dialog\";\n  children?: React.ReactNode;\n  className?: string;\n  id?: string;\n  style?: React.CSSProperties;\n  ref?: React.Ref<HTMLButtonElement>;",
+    "Input": "  /** Native input type; defaults to \"text\". Renders <input class=\"sl-input\">. */\n  type?: string;\n  value?: string | number;\n  defaultValue?: string | number;\n  placeholder?: string;\n  name?: string;\n  disabled?: boolean;\n  readOnly?: boolean;\n  required?: boolean;\n  autoFocus?: boolean;\n  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;\n  \"aria-invalid\"?: boolean;\n  \"aria-describedby\"?: string;\n  className?: string;\n  id?: string;\n  style?: React.CSSProperties;\n  ref?: React.Ref<HTMLInputElement>;",
+    "Icon": "  /** Material Symbols Rounded alias. The SVG is filled by SlateUI.init / useSlateUI; changing name after mount plays a 220ms scale crossfade. Always aria-hidden: label the owning control. */\n  name: \"play\" | \"pause\" | \"stop\" | \"mic\" | \"grid\" | \"layers\" | \"palette\" | \"pointer\" | \"panel\" | \"copy\" | \"settings\" | \"book\" | \"download\" | \"check\" | \"close\" | \"minus\" | \"square\" | \"chevron\" | \"code\" | \"search\";\n  className?: string;\n  style?: React.CSSProperties;\n  ref?: React.Ref<SVGSVGElement>;",
+    "Panel": "  /** Renders <section class=\"sl-panel\">. Compose with .sl-panel-head, .sl-row, .sl-stack inside. */\n  children?: React.ReactNode;\n  \"aria-label\"?: string;\n  \"aria-labelledby\"?: string;\n  className?: string;\n  id?: string;\n  style?: React.CSSProperties;\n  ref?: React.Ref<HTMLElement>;",
+    "HoverList": "  /** Renders <div data-sl-hover>: one travelling hover pill for its MenuRow (data-sl-row) descendants. Requires useSlateUI on an ancestor. */\n  children?: React.ReactNode;\n  role?: string;\n  \"aria-label\"?: string;\n  className?: string;\n  id?: string;\n  style?: React.CSSProperties;\n  ref?: React.Ref<HTMLDivElement>;",
+    "MenuRow": "  /** Renders <button class=\"sl-menu-row\" data-sl-row type=\"button\">. Put inside HoverList, usually within a .sl-menu surface. */\n  children?: React.ReactNode;\n  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;\n  disabled?: boolean;\n  /** \"menuitem\" inside role=\"menu\", \"option\" inside role=\"listbox\". */\n  role?: string;\n  \"aria-selected\"?: boolean;\n  \"aria-current\"?: boolean | \"page\";\n  /** Value reported by the slate:select event when used in a data-sl-menu menu. */\n  \"data-sl-value\"?: string;\n  className?: string;\n  id?: string;\n  style?: React.CSSProperties;\n  ref?: React.Ref<HTMLButtonElement>;",
+    "Status": "  /** Omit for neutral. Colors the dot and text; always include readable text. */\n  tone?: \"success\" | \"warning\" | \"error\";\n  children?: React.ReactNode;\n  /** Add role=\"status\" only for live-updating values. */\n  role?: string;\n  className?: string;\n  id?: string;\n  style?: React.CSSProperties;"
+  }
+}
