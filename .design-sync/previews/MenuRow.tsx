@@ -34,12 +34,13 @@ export const WithDescription = () => (
 
 export const SelectOptions = () => (
   <div style={{ minHeight: 180 }}>
-    {/* Custom select, open: the trigger shows the chosen value; slate:select reports data-sl-value. */}
+    {/* Custom select in its real initial state: the menu stays hidden until the trigger opens it.
+        Picking an option updates data-sl-selected and fires slate:select with data-sl-value. */}
     <div className="sl-popover-host">
-      <Button data-sl-menu="workspace-options" aria-controls="workspace-options" aria-haspopup="listbox" aria-expanded={true}>
+      <Button data-sl-menu="workspace-options" aria-controls="workspace-options" aria-haspopup="listbox" aria-expanded={false}>
         <span data-sl-selected>Personal</span><Icon name="chevron" />
       </Button>
-      <div className="sl-menu" id="workspace-options" role="listbox" aria-label="Workspaces">
+      <div className="sl-menu" id="workspace-options" role="listbox" aria-label="Workspaces" hidden>
         <HoverList>
           <MenuRow role="option" aria-selected={true} data-sl-value="personal">Personal</MenuRow>
           <MenuRow role="option" aria-selected={false} data-sl-value="shared">Shared</MenuRow>

@@ -8,14 +8,15 @@
 // top-level `module`/`types` pointing at the ./react subpath. Nothing is
 // transformed; the repo's own package.json is left untouched.
 //
-// Usage: node .design-sync/stage-package.mjs [outDir]
+// Usage: node .design-sync/stage-package.mjs
+// The output path is fixed (it is wiped before every run), never user-supplied.
 
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const out = resolve(repo, process.argv[2] ?? '.ds-sync/slate-ui');
+const out = join(repo, '.ds-sync', 'slate-ui');
 const pkg = JSON.parse(readFileSync(join(repo, 'package.json'), 'utf8'));
 const sub = pkg.exports?.['./react'];
 if (!sub?.import || !sub?.types) {

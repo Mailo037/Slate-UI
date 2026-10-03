@@ -14,7 +14,8 @@
 - All 8 components are authored (31 cells), ported from the gallery's `catalogue.js` / `index.html` compositions.
 - **Root setup is module-level, above the first export.** It runs `document.body.classList.add('slate-ui')` and `window.SlateUI.init(document)`. Exports are plain component JSX. The converter copies raw text from each `export const X =` up to the next export into `.prompt.md` examples. So never use a local wrapper component or helper const between exports: an earlier `<SlateRoot>` helper leaked into every example as a component the bundle doesn't export.
 - The body-level `.slate-ui` makes the whole card dark (canvas `#181818`), which matches the dark-only kit.
-- Static captures can't show the travelling hover pill or tooltips (pointer-driven). The `.sl-menu-row[aria-selected=true]` style is nearly invisible by design, so the select example shows the open trigger + listbox instead.
+- Static captures can't show the travelling hover pill or tooltips (pointer-driven).
+- **Render menus/selects in their real initial state (`hidden` menu, `aria-expanded={false}`).** `slate.js` tracks the open menu only when its trigger runs `open()`. A listbox rendered visible from the start never registers as open: option clicks, Escape and arrow keys do nothing. The SelectOptions cell therefore shows the closed trigger; clicking it opens the real listbox (checked in Chromium: select, `slate:select`, Escape).
 
 ## Known render warns
 - None. The final validate reports 8/8 clean.
